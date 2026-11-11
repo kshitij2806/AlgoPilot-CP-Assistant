@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CP Assistant</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body class="dark-theme">
+  <div id="app" class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <span class="logo-icon">⚡</span>
+        <h1 class="app-title">CP Assistant</h1>
+      </div>
+      <div class="header-right">
+        <span id="platform-badge" class="badge badge-neutral">Scanning...</span>
+        <button id="btn-settings" class="icon-btn" title="Settings">⚙️</button>
+      </div>
+    </header>
+
+    <!-- Problem Info Card -->
+    <section id="problem-card" class="problem-card hidden">
+      <div class="problem-meta">
+        <h2 id="problem-title" class="problem-title">Problem Title</h2>
+        <span id="problem-difficulty" class="badge badge-difficulty">Medium</span>
+      </div>
+      <div class="problem-stats">
+        <span id="problem-platform" class="text-muted">LeetCode</span>
+        <button id="btn-re-extract" class="link-btn" title="Re-extract problem">🔄 Refresh</button>
+      </div>
+    </section>
+
+    <!-- Empty / Waiting State -->
+    <div id="no-problem-view" class="empty-state">
+      <div class="empty-icon">🧩</div>
+      <h3>No Problem Detected</h3>
+      <p>Open a problem on LeetCode, Codeforces, HackerRank, CodeChef, or GeeksforGeeks, then click below.</p>
+      <button id="btn-manual-extract" class="btn btn-primary">Extract Problem</button>
+    </div>
+
+    <!-- Pedagogical Step Navigation -->
+    <nav id="step-nav" class="step-nav hidden">
+      <button class="nav-tab active" data-step="understanding">
+        <span class="tab-icon">💡</span>
+        <span class="tab-text">Understand</span>
+      </button>
+      <button class="nav-tab" data-step="intuition">
+        <span class="tab-icon">🧠</span>
+        <span class="tab-text">Intuition</span>
+      </button>
+      <button class="nav-tab" data-step="hints">
+        <span class="tab-icon">🔍</span>
+        <span class="tab-text">Hints</span>
+      </button>
+      <button class="nav-tab" data-step="bruteforce">
+        <span class="tab-icon">🐢</span>
+        <span class="tab-text">Brute</span>
+      </button>
+      <button class="nav-tab" data-step="optimized">
+        <span class="tab-icon">⚡</span>
+        <span class="tab-text">Optimal</span>
+      </button>
+    </nav>
+
+    <!-- AI Response Viewport -->
+    <main id="response-viewport" class="response-viewport hidden">
+      <div id="response-content" class="response-content">
+        <!-- Markdown injected here -->
+      </div>
+    </main>
+
+    <!-- Settings Modal Drawer -->
+    <div id="settings-modal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Settings & API Keys</h3>
+          <button id="btn-close-settings" class="icon-btn">✕</button>
+        </div>
+        <div class="modal-body">
+          <!-- Provider Selection -->
+          <div class="form-group">
+            <label for="provider-select">Active AI Provider</label>
+            <select id="provider-select" class="form-select">
+              <option value="gemini">Google Gemini (Recommended / Free tier)</option>
+              <option value="groq">Groq (Ultra Fast Inference)</option>
+              <option value="openai">OpenAI (GPT-4o Mini)</option>
+            </select>
+          </div>
+
+          <!-- Model Selection -->
+          <div class="form-group">
+            <label for="model-select">Model</label>
+            <select id="model-select" class="form-select"></select>
+          </div>
+
+          <!-- Code Language Selection -->
+          <div class="form-group">
+            <label for="language-select">Preferred Language</label>
+            <select id="language-select" class="form-select">
+              <option value="Python3">Python 3</option>
+              <option value="C++">C++ (std 17/20)</option>
+              <option value="Java">Java</option>
+              <option value="JavaScript">JavaScript</option>
+              <option value="TypeScript">TypeScript</option>
+              <option value="Rust">Rust</option>
+              <option value="Go">Go</option>
+            </select>
+          </div>
+
+          <!-- API Keys Section -->
+          <div class="form-group">
+            <label>API Keys for <span id="current-provider-name">Gemini</span></label>
+            <div class="key-input-row">
+              <input type="password" id="api-key-input" class="form-input" placeholder="Paste API Key here...">
+              <button id="btn-add-key" class="btn btn-secondary">Add</button>
+            </div>
+            <ul id="key-list" class="key-list"></ul>
+          <!-- Speculative Prefetch Toggle -->
+          <div class="form-group">
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+              <input type="checkbox" id="prefetch-toggle" checked>
+              <span>Speculative Pre-fetch (Instant load)</span>
+            </label>
+            <p class="form-tip">Caches problem understanding in background for 0ms load.</p>
+          </div>
+
+          <!-- Cache Actions -->
+          <div class="form-group pt-2">
+            <button id="btn-clear-cache" class="btn btn-outline-danger">Clear Stored Cache</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
